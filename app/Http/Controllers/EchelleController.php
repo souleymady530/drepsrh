@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateEchelleRequest;
 use App\Http\Requests\UpdateEchelleRequest;
+use App\Repositories\EchelleRepository;
+use App\Models\Echelle;
+
+
+
 class EchelleController extends Controller
 {
     /**
@@ -12,9 +17,21 @@ class EchelleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected $eRepos;
+    protected $nbrePerPage=15;
+    public function __copnstruct(EchelleRepository $eRepos)
+    {
+        $this->eRepos=eRepos;
+    }
+
     public function index()
     {
         //
+        $ehelles=$this->eRepos->getPaginate($this->nbre);
+        $links=$echelles->setPath('');
+
+        return view("AllEchelle",compact("echelles","links"));
     }
 
     /**
@@ -36,6 +53,8 @@ class EchelleController extends Controller
     public function store(CreateEchelleRequest $request)
     {
         //
+        $this->eRepos->store($requets-all());
+      
     }
 
     /**
@@ -47,6 +66,8 @@ class EchelleController extends Controller
     public function show($id)
     {
         //
+        $echelle=$this->eRepos->getById($id);
+       // return $echelle;
     }
 
     /**
@@ -58,6 +79,7 @@ class EchelleController extends Controller
     public function edit($id)
     {
         //
+        $echelle=$this->eRepos->getById($id);
     }
 
     /**
@@ -69,7 +91,7 @@ class EchelleController extends Controller
      */
     public function update(UpdateEchelleRequest $request, $id)
     {
-        //
+        $this->eRepos->update($id,$request->all());
     }
 
     /**
@@ -80,6 +102,6 @@ class EchelleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->eRepos->delete($id);
     }
 }

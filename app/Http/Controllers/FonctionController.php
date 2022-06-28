@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateFonctionRequest;
 use App\Http\Requests\UpdateFonctionRequest;
+use App\Rpositories\FonctionRepository;
+use App\Models\Fonction;
+
 class FonctionController extends Controller
 {
     /**
@@ -12,9 +15,21 @@ class FonctionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $fRepos;
+    protected $nbre=15;
+    public function  __construct(FonctionRepository $fRepos)
+    {
+        $this->fRepos=$fRepos;
+    }
+
+
     public function index()
     {
-        //
+        $fonction=$this->fRepos->getPaginate($this->nbre);
+        $links=$fonctions->setPath('');
+
+        return view("AllFonction",compact("fonctions","links"));
+    
     }
 
     /**

@@ -20,8 +20,8 @@ class DPEPS extends Migration
             $table->string ("nomDPEPS",30)-> unique();
             $table->string("nom1erRespDPEPS",100);
             $table->string("prenom1erRespDPEPS",100);
-            $table->string("Emploi1erRespDPEPS,100");
-            $table->string("titreHonor1respDPEPS,100");         
+            $table->string("Emploi1erRespDPEPS",100);
+            $table->string("titreHonor1respDPEPS",100);         
             $table->integer("DREPS");
             $table->foreign("DREPS")
                   ->references("id")

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateDpepsRequest;
 use App\Http\Requests\UpdateDpepsRequest;
+use App\Repositories\DpepsRepository;
+use App\Models\Dpeps;
+
+
 class DpepsController extends Controller
 {
     /**
@@ -12,9 +16,24 @@ class DpepsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+        private $dRepos;
+        private $nbre=15;
+         public function __construct(DpepsRepository $dRepos)
+         {
+            $this->dRepos=$dRepos;
+         }
+
+
+
     public function index()
     {
         //
+        $directions=$this->dRepos->getPaginate($this->nbre);
+        $links=$directions->setPath('');
+        
+        return view("MinAllDirectionsP",compact('directions','links'));
     }
 
     /**

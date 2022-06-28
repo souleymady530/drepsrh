@@ -184,7 +184,9 @@ class AutresTables extends Migration
                   ->references("id")
                   ->on("Echellon")
                   ->onUpdate("restrict")
-                  ->onDelete("restrict");                                   
+                  ->onDelete("restrict");  
+                  $table->string("TypeAgent");
+                                 
         }
         );        
     }

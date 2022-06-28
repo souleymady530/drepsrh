@@ -1,4 +1,4 @@
-@extends('template')
+@extends('templateAdmin')
 @section("titre")
 Catégories
 @endsection

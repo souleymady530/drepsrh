@@ -28,6 +28,10 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configurePermissions();
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
+        $this->app->singleton(
+            
+            \App\Http\Responses\LoginResponse::class
+        );
     }
 
     /**

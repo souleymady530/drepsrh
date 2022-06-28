@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateEchellonRequest;
 use App\Http\Requests\UpdateEchellonRequest;
+use App\Repositories\EchellonRepository;
+use App\Models\Echellon;
+
+
 class EchellonController extends Controller
 {
     /**
@@ -12,9 +16,19 @@ class EchellonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $eRepos;
+    protected $nbre=15;
+    public function ___construct(EchellonRepository $eRepos)
+    {
+        $this->eRepos=eRepos;
+    }
+
+
     public function index()
     {
-        //
+        $ehellons=$this->eRepos->getPaginate($this->nbre);
+        $links=$echellons->setPath('');
+        return view("AllEchellon",compact("echellons","links"));
     }
 
     /**
@@ -36,6 +50,8 @@ class EchellonController extends Controller
     public function store(CreateEchellonRequest $request)
     {
         //
+        $this->eRepos->store($request->all());
+        
     }
 
     /**

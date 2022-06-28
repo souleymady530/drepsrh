@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Agent;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateAgentRequest;
 use App\Http\Requests\UpdateAgentRequest;
@@ -23,9 +24,46 @@ class AgentController extends Controller
     }
     public function index()
     {
-        $agents=$this->aRepos->getPaginate($this->nombre);
-        $links=$agents->setPath('');
-        return view("allAgents",compact("agents","links"));
+        $type=Auth::user()->type;
+        if($type==2)
+           {
+                $agents=Agent::where("TypeAgent","=","MIN")->orderBy("nomAgent")->paginate($this->nombre);
+                $links=$agents->setPath('');
+                return view("MinAllAgents",compact("agents","links"));
+           } 
+    
+        else if($type==1)
+           {
+            $agents=$this->aRepos->getPaginate($this->nombre);
+            $links=$agents->setPath('');
+            return view("allAgents",compact("agents","links"));
+           } 
+     
+        
+        else if($type==4)
+        {
+            $agents=$this->aRepos->getPaginate($this->nombre);
+            $links=$agents->setPath('');
+            return view("allAgents",compact("agents","links"));
+        } 
+ 
+        else if($type==3)
+        {
+            $agents=$this->aRepos->getPaginate($this->nombre);
+            $links=$agents->setPath('');
+            return view("DrepsAllAgents",compact("agents","links"));
+        } 
+ 
+
+        else if($type==0)
+            
+        {
+            $agents=$this->aRepos->getPaginate($this->nombre);
+            $links=$agents->setPath('');
+            return view("allAgents",compact("agents","links")); 
+        } 
+ 
+       
     }
 
     /**
@@ -47,7 +85,7 @@ class AgentController extends Controller
     public function store(CreateAgentRequest $request)
     {
         $this->aRepos->store($request->all());
-        return view("StoreConfirmRegistration");
+        //return view("StoreConfirmRegistration");
     }
 
     /**

@@ -17,6 +17,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+   
+       echo  $type=Auth::user()->type;
+       if($type==2)
+             return redirect("/homeMin");
+         
+         else if($type==1)
+             return redirect("/homeAdmin");
+         
+         else if($type==4)
+             return redirect("/homeDpeps");
+         
+         else if($type==3)
+             return redirect("/homeDreps");
+
+         else if($type==0)
+             return redirect("/homeEts");
+            
+   
+
+ })->name('dashboard');
+
+
+
+Route::get("/homeAdmin",'App\Http\Controllers\MainController@HomeAdmin');
+Route::get("/homeMin",'App\Http\Controllers\MainController@HomeMin');
+Route::get("/homeDpeps",'App\Http\Controllers\MainController@HomeDPEPS');
+Route::get("/homeDreps",'App\Http\Controllers\MainController@HomeDREPS');
+Route::get("/homeEts",'App\Http\Controllers\MainController@HomeEts');
+
 
 Route::resource("/Agent",'App\Http\Controllers\AgentController');
 Route::resource("/Categorie",'App\Http\Controllers\CategorieControllerController');
@@ -31,4 +61,4 @@ Route::resource("/Fonction",'App\Http\Controllers\FonctionController');
 Route::resource("/LieuDeTravail",'App\Http\Controllers\LieuDeTravailController');
 Route::resource("/Localite",'App\Http\Controllers\LocaliteController');
 Route::resource("/TypePersonnel",'App\Http\Controllers\TypePersonnelController');
-Route::resource("/Users",'App\Http\Controllers\UsersController'
+Route::resource("/Users",'App\Http\Controllers\UsersController');

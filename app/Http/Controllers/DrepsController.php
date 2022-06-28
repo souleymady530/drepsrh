@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateDrepsRequest;
 use App\Http\Requests\UpdateDrepsRequest;
+use App\Repositories\DrepsRepository;
+
+
 class DrepsController extends Controller
 {
     /**
@@ -12,9 +15,19 @@ class DrepsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+private $dRepos;
+private $nbre=15;
+     public function __construct(DrepsRepository $dRepos)
+     {
+        $this->dRepos=$dRepos;
+     }
+
+
     public function index()
     {
-        //
+        $directions=$this->dRepos->getPaginate($this->nbre);
+        $links=$directions->setPath('');
+        return view("allDirections",compact('directions','links'));
     }
 
     /**
