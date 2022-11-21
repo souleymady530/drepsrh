@@ -1,7 +1,7 @@
 <?php 
 namespace App\Repositories;
 use App\Models\fonction;
-class fonctionRepository extends ResourceRepository
+class FonctionRepository extends ResourceRepository
 {
 	
 	public function __construct(fonction $p)

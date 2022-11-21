@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateCommuneRequest;
 use App\Http\Requests\UpdateCommuneRequest;
 use App\Repositories\CommuneRepository;
+use App\Models\Dpeps;
+
 
 class CommuneController extends Controller
 {
@@ -14,18 +16,20 @@ class CommuneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected $ComRepos;
+    protected $cRepos;
     protected $nombre=15;
 
     public function __construct(CommuneRepository $CommRepos)
     {
-    $this->ComRepos=$CommRepos;
+    $this->cRepos=$CommRepos;
     }
+
     public function index()
     {
-        $commune=$this->ComRepos->getPaginate($this->nombre);
-        $links=$commune->setPath('');
-        return view("allCommune",compact("commune","links"));
+        $communes=$this->cRepos->getPaginate($this->nombre);
+        $links=$communes->setPath('');
+        $dpeps=Dpeps::all();
+        return view("allCommune",compact("communes","links","dpeps"));
     }
 
     /**
@@ -44,10 +48,20 @@ class CommuneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCommuneRequest $request)
+    public function store(Request $request)
     {
-        $this->ComRepos->store($request->all());
-        return view("StoreConfirmRegistration");
+        if($request->ajax())
+        {
+            $this->validate($request,
+            [
+                "nomCommune"=>"required",
+                "DPEPS"=>"required",
+            ]);
+            $this->cRepos->store($request->all());
+            return response()->json();
+
+        }
+        abort(404);
     }
 
     /**
@@ -58,8 +72,8 @@ class CommuneController extends Controller
      */
     public function show($id)
     {
-        $commune=$this->ComRepos->getById($id);
-        return view("Fichecommune",compact("commune"));
+        $commune=$this->cRepos->getById($id);
+        return $commune;
     }
 
     /**
@@ -70,8 +84,7 @@ class CommuneController extends Controller
      */
     public function edit($id)
     {
-       $commune=$this->ComRepos->getById($id);
-       return view("Editcommune",compact("commune"));
+       
     }
 
     /**
@@ -83,8 +96,19 @@ class CommuneController extends Controller
      */
     public function update(UpdateCommuneRequest $request, $id)
     {
-        $this->ComRepos->update($id,$request->all());
-        return view("UpdateConfirmRegistration");
+        if($request->ajax())
+        {
+            $this->validate($request,
+            [
+                "nomCommune"=>"required",
+                "DPEPS"=>"required",
+            ]);
+
+            $this->cRepos->update($id,$request->all());
+            return response()->json();
+        }
+        abort(404);
+        
     }
 
     /**
@@ -95,7 +119,7 @@ class CommuneController extends Controller
      */
     public function destroy($id)
     {
-        $this->ComRepos->Delete($id);
-        return redirect()->back();
+        $this->cRepos->destroy($id);
+        return "OK";
     }   
 }       

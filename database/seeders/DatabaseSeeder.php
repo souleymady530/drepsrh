@@ -52,6 +52,13 @@ class DatabaseSeeder extends Seeder
                         'password'=>Hash::make('jht100cds%Francs'),
                         'type'=>2,
                         ]);
+
+                        DB::table('users')->insert([
+                            'pseudo'=>"Ets530",
+                            'email'=>"Ets530@gmail.com",
+                            'password'=>Hash::make('jht100cds%Francs'),
+                            'type'=>0,
+                            ]);
            
     }
 }

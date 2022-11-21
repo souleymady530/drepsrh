@@ -12,13 +12,13 @@
     <title>DREPS - RH</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="@yield('ref')vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="@yield('ref')css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -42,12 +42,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Menu Principal</span></a>
-            </li>
-
+           
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -56,7 +51,15 @@
            MENU
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Pages Collapse Menu
+         <a class="collapse-item" href="{{url('/homeAdmin')}}">Accueil</a>
+        -->
+            <li class="nav-item">
+            <a class="nav-link" href="homeAdmin">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Accueil</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -65,10 +68,9 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    
-                        <a class="collapse-item" href="{{url('/Dreps')}}">Utilisateurs</a>
-                        <a class="collapse-item" href="{{url('/Dpeps')}}">Journalisation</a>
-                        
+                        <a class="collapse-item" href="{{url('/Actualite')}}">Actualités</a>
+                        <a class="collapse-item" href="{{url('/Annonce')}}">Annonces</a>
+                        <a class="collapse-item" href="{{url('/Gallery')}}">Gallery</a>                        
                     </div>
                 </div>
             </li>
@@ -84,11 +86,13 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                        
+                       
                         <a class="collapse-item" href="{{url('/DiplomeAccademique')}}">Diplome</a>
+                        <a class="collapse-item" href="{{url('/Admin-Ets')}}">Etablissement</a>
+                        <a class="collapse-item" href="{{url('/Admin-Dpeps')}}">DPEPS</a>
+                        <a class="collapse-item" href="{{url('/Admin-Dreps')}}">DREPS</a>
                         <a class="collapse-item" href="{{url('/Categorie')}}">Catégorie</a>
-                        <a class="collapse-item" href="{{url('/Echelle')}}">Echelle</a>
-                        <a class="collapse-item" href="{{url('/Echellon')}}">Echelon</a>
-                        <a class="collapse-item" href="{{url('/Emploi')}}">Emploi</a>
+                        <a class="collapse-item" href="{{url('/Commune')}}">Commune</a>
                         <a class="collapse-item" href="{{url('/Fonction')}}">Fonction</a>
                         <a class="collapse-item" href="{{url('/Emploi')}}">Emploi</a>
                         <a class="collapse-item" href="{{url('/Localite')}}">Localité</a>
@@ -104,14 +108,18 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="" onclick="event.preventDefault();
-                                                jQuery('.form').submit();">
+                                                jQuery('.formDeconnexion').submit();">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Deconnexion</span></a>
             </li>
            
-            <form method="POST" action="{{url('logout')}}"  class="form">
+            <form method="POST" action="{{url('logout')}}"  class="formDeconnexion">
 			  @csrf
 			 </form>
+
+
+
+
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
@@ -393,21 +401,21 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="@yield('ref')vendor/jquery/jquery.min.js"></script>
+    <script src="@yield('ref')vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="@yield('ref')vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="@yield('ref')js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="@yield('ref')vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="@yield('ref')js/demo/chart-area-demo.js"></script>
+    <script src="@yield('ref')js/demo/chart-pie-demo.js"></script>
 
 </body>
 

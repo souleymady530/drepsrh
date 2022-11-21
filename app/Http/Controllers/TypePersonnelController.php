@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTypepersonnelRequest;
 use App\Http\Requests\UpdateTypepersonnelRequest;
+use App\Models\typepersonnel;
+use App\Repositories\TypePersonnelRepository;
+
+
+
 class TypePersonnelController extends Controller
 {
     /**
@@ -12,9 +17,20 @@ class TypePersonnelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     protected $tRepos;
+     protected $nbre=15;
+     public function __construct(TypePersonnelRepository $tRepos)
+     {
+         $this->tRepos=$tRepos;
+     }
+
     public function index()
     {
         //
+        $typePersonnels=$this->tRepos->getPaginate($this->nbre);
+        $links=$typePersonnels->setPath('');
+        return view("allTypePersonnel",compact("typePersonnels","links"));
     }
 
     /**
@@ -36,6 +52,8 @@ class TypePersonnelController extends Controller
     public function store(CreateTypepersonnelRequest $request)
     {
         //
+        $this->tRepos->store($request->all());
+        return "Ok";
     }
 
     /**
@@ -47,6 +65,8 @@ class TypePersonnelController extends Controller
     public function show($id)
     {
         //
+        $typePersonnel=$this->tRepos->getById($id);
+        return $typePersonnel;
     }
 
     /**
@@ -70,6 +90,8 @@ class TypePersonnelController extends Controller
     public function update(UpdateTypepersonnelRequest $request, $id)
     {
         //
+        $this->tRepos->update($id,$request->all());
+        return "OK";
     }
 
     /**
@@ -81,5 +103,7 @@ class TypePersonnelController extends Controller
     public function destroy($id)
     {
         //
+        $this->tRepos->destroy($id);
+        return "ok";
     }
 }

@@ -28,7 +28,7 @@ class CreateDrepsRequest extends FormRequest
             "nomDREPS"=>"required|string|min:5",
             "nom1erResponsable"=>"required|string|min:2",
             "prenom1erResponsable"=>"required|string|min:2",
-            "Emploi1erResponsable"=>"required|string|min:5",
+            "emploi1erResponsable"=>"required|string|min:5",
             "titreHonorifique1erResponsable"=>"required|string|min:10",
         ];
     }

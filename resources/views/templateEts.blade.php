@@ -105,11 +105,16 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{url('logout')}}" onclick="event.preventDefault();
-                                                jQuery('.form').submit();">
+                <a class="nav-link" href="" onclick="event.preventDefault();
+                                                jQuery('.formDeconnexion').submit();">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Deconnexion </span></a>
+                    <span>Deconnexion</span></a>
             </li>
+           
+            <form method="POST" action="{{url('logout')}}"  class="formDeconnexion">
+			  @csrf
+			 </form>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">

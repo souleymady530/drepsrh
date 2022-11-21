@@ -31,6 +31,8 @@ class agent extends Model
       'CategorieAgent',
       'EchelleAgent',
       'EchellonAgent',
+      'TypeAgent',
+      'idCreateur',
 
     ];
 

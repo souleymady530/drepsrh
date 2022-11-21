@@ -13,6 +13,98 @@ class AutresTables extends Migration
      */
     public function up()
     {
+        Schema:: create('Ministeres',
+        function(Blueprint $table)
+        {
+            $table->id();
+            $table->string ("nomMinistere",250)-> unique();
+            $table->string("nom1erResponsable",100);
+            $table->string("prenom1erResponsable",100);
+            $table->string("Emploi1erResponsable",100);
+            $table->string("titreHonorifique1resp",100);         
+  
+        });
+
+
+        Schema:: create('DREPS',
+        function(Blueprint $table)
+        {
+            $table->id();
+            $table->string ("nomDREPS",30)-> unique();
+            $table->string("nom1erResponsable",100);
+            $table->string("prenom1erResponsable",100);
+            $table->string("Emploi1erResponsable",100);
+            $table->string("titreHonorifique1resp",100);         
+  
+        });
+
+        Schema:: create('DPEPS',
+        function(Blueprint $table)
+        {
+            $table->id();
+            $table->string ("nomDPEPS",30)-> unique();
+            $table->string("nom1erRespDPEPS",100);
+            $table->string("prenom1erRespDPEPS",100);
+            $table->string("Emploi1erRespDPEPS",100);
+            $table->string("titreHonor1respDPEPS",100);         
+            $table->integer("DREPS");
+            $table->foreign("DREPS")
+                  ->references("id")
+                  ->on("DREPS")
+                  ->onUpdate("restrict")
+                  ->onDelete("restrict");
+        });
+    
+
+        Schema::create("etablissements",function(Blueprint $table)
+        {
+            $table->id();
+            $table->string("nomEtablissement");
+            $table->string("localite",50);
+            
+            $table->integer("idDpeps");
+            $table->foreign("idDpeps")
+                  ->references("id")
+                  ->on("DPEPS")
+                  ->onUpdate("restrict")
+                  ->onDelete("restrict");
+        });
+
+        //CREATION DE LA TABLE AGENT
+        Schema:: create('Agent',
+        function(Blueprint $table)
+        {
+            $table->id();
+            $table->string("matriculeAgent",50);            
+            $table->string("nomAgent",100);
+            $table->string("prenomAgent",200);
+            $table->string("sexeAgent",20);
+            $table->date("DateDeNaissanceAgent");
+            $table->date("DateDerniereDecoration");
+            $table->string("Titrehonorifique");
+            $table->date("DateIntegrationFP");
+            $table->date("DatePriseServiceLieuTravail");
+            $table->date("DatePriseServiceProvinceRegion");
+            $table->string("LieuDeNaissanceAgent");
+            $table->string("TypeDePersonnel");
+            $table->string("LieuDeTravailAgent");
+            $table->string("EmploiAgent");
+            $table->string("FonctionAgent");     
+            $table->string("DernierDiplomeAccademique"); 
+            $table->string("CategorieAgent");    
+            $table->string("EchelleAgent");   
+            $table->string("EchellonAgent"); 
+            $table->string("TypeAgent");
+            $table->integer("idCreateur");
+          
+
+               // $table->string("code");
+                 
+                                 
+        });  
+
+
+
         //CREATION DE LA TABLE COMMUNE
         Schema:: create('Commune',
         function(Blueprint $table)
@@ -94,7 +186,7 @@ class AutresTables extends Migration
         Function(Blueprint $table)
         {
             $table->id();
-            $table->string("TypePersonnel",4);
+            $table->string("TypePersonnel",30);
         }
         );
         //CREATION DE LA TABLE ECHELLE
@@ -113,82 +205,10 @@ class AutresTables extends Migration
             $table->string("NomEchellon",4);
         }
         );
-        //CREATION DE LA TABLE AGENT
-        Schema:: create('Agent',
-        function(Blueprint $table)
-        {
-            $table->id();
-            $table->string("matriculeAgent",50);            
-            $table->string("nomAgent",100);
-            $table->string("prenomAgent",200);
-            $table->string("sexeAgent",20);
-            $table->date("DateDeNaissanceAgent");
-            $table->date("DateDerniereDecoration");
-            $table->string("Titrehonorifique");
-            $table->date("DateIntegrationFP");
-            $table->date("DatePriseServiceLieuTravail");
-            $table->date("DatePriseServiceProvinceRegion");
-            $table->string("LieuDeNaissanceAgent");
-
-            $table->integer("TypeDePersonnel");
-            $table->foreign("TypeDePersonnel")
-                  ->references("id")
-                  ->on("TypePersonnel")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict");            
-            
-            $table->integer("LieuDeTravailAgent");
-            $table->foreign("LieuDeTravailAgent")
-                  ->references("id")
-                  ->on("LieuDeTravail")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict");
-            
-            $table->integer("EmploiAgent");
-            $table->foreign("EmploiAgent")
-                  ->references("id")
-                  ->on("Emploi")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict");
-            
-            $table->integer("FonctionAgent"); 
-            $table->foreign("FonctionAgent") 
-                  ->references("id")
-                  ->on("Fonction")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict");   
-                  
-            $table->integer("DernierDiplomeAccademique"); 
-            $table->foreign("DernierDiplomeAccademique") 
-                  ->references("id")
-                  ->on("DiplomeAccademique")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict"); 
-                  
-            $table->integer("CategorieAgent"); 
-            $table->foreign("CategorieAgent") 
-                  ->references("id")
-                  ->on("Categorie")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict"); 
-                  
-            $table->integer("EchelleAgent"); 
-            $table->foreign("EchelleAgent") 
-                  ->references("id")
-                  ->on("Echelle")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict"); 
-                  
-            $table->integer("EchellonAgent"); 
-            $table->foreign("EchellonAgent") 
-                  ->references("id")
-                  ->on("Echellon")
-                  ->onUpdate("restrict")
-                  ->onDelete("restrict");  
-                  $table->string("TypeAgent");
-                                 
-        }
-        );        
+         
+        
+        
+       
     }
 
     /**
@@ -207,6 +227,9 @@ class AutresTables extends Migration
         Schema::dropIfExists('TypePersonnel');
         Schema::dropIfExists('Echelle');
         Schema::dropIfExists('Echellon');        
-        Schema::dropIfExists('Agent');                                               
+        Schema::dropIfExists('Agent');   
+        Schema::dropIfExists('DREPS'); 
+        Schema::dropIfExists('DPEPS');  
+        Schema::dropIfExists('etablissements');                                         
     }
 }

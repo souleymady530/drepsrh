@@ -25,7 +25,7 @@ class CreateDiplomeRequest extends FormRequest
     {
         return 
         [
-            "NomDiplome"=>"required",            
+            "NomDiplome"=>"required|unique:diplomeaccademique",            
         ];
     }
 }

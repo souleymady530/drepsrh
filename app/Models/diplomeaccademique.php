@@ -12,7 +12,7 @@ class diplomeaccademique extends Model
     protected $fillable=
     [
     'id',
-    'NomDiplome',
+    'NomDiplome',       
     ];
     public $timestamps=false;
 }

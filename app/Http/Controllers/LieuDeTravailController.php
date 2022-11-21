@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateLieudetravailRequest;
-use App\Http\Requests\UpdateLieudetravailRequest;
+
+use App\Models\lieudetravail;
+use App\Models\Commune;
+use App\Models\localite;
+
+use App\Repositories\LieudetravailRepository;
+
+
 class LieuDeTravailController extends Controller
 {
     /**
@@ -12,9 +18,21 @@ class LieuDeTravailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $lRepos;
+    protected $nbre;
+    public function __construct(LieudetravailRepository $lRepos)
+    {
+        $this->lRepos=$lRepos;
+    }
+
+
     public function index()
     {
         //
+        $lieux=$this->lRepos->getPaginate($this->nbre);
+        $links=$lieux->setPath('');
+    $localites=localite::all();
+        return view("allLieu",compact('links','lieux','localites'));
     }
 
     /**
@@ -33,9 +51,21 @@ class LieuDeTravailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateLieudetravailRequest $request)
+    public function store(Request $request)
     {
         //
+        if($request->ajax())
+        {
+            $this->validate($request,
+            [
+                "nomLieuDeTravail"=>"required|string|min:5",
+                "TypeLieuDeTravail"=>"required|string|min:5",
+                "Localite"=>"required",
+            ]);
+            $this->lRepos->store($request->all());
+            return response()->json();
+        }
+        abort(404);
     }
 
     /**
@@ -47,6 +77,8 @@ class LieuDeTravailController extends Controller
     public function show($id)
     {
         //
+        $lieu=$this->lRepos->getById($id);
+        return $lieu;
     }
 
     /**
@@ -67,9 +99,22 @@ class LieuDeTravailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLieudetravailRequest $request, $id)
+    public function update(Request $request, $id)
     {
         //
+        if($request->ajax())
+        {
+            $this->validate($request,
+            [
+                "nomLieuDeTravail"=>"required|string|min:5",
+                "TypeLieuDeTravail"=>"required|string|min:5",
+                "Localite"=>"required",
+            ]);
+            $this->lRepos->update($id,$request->all());
+            return response()->json();
+
+        }
+        abort(404);
     }
 
     /**
@@ -81,5 +126,7 @@ class LieuDeTravailController extends Controller
     public function destroy($id)
     {
         //
+        $this->lRepos->destroy($id);
+        return "ok";
     }
 }

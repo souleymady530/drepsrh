@@ -26,8 +26,8 @@ class UpdateAgentRequest extends FormRequest
         $id=$this->segment(2);
         return 
         [
-            //Règles de mise à jour de la table agent
-            "matriculeAgent"=>"String|Min:7|Max:20|Unique:agent,matriculeAgent,".$id,
+            //Règles de mise à jour de la table agent  required|unique:diplomeaccademique,NomDiplome,".$id
+            "matriculeAgent"=>"String|Unique:agent,matriculeAgent,".$id,
             "nomAgent"=>"required",
             "prenomAgent"=>"required",
             "sexeAgent"=>"required",

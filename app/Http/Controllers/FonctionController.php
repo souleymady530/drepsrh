@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateFonctionRequest;
 use App\Http\Requests\UpdateFonctionRequest;
-use App\Rpositories\FonctionRepository;
+use App\Repositories\FonctionRepository;
 use App\Models\Fonction;
 
 class FonctionController extends Controller
@@ -25,7 +25,7 @@ class FonctionController extends Controller
 
     public function index()
     {
-        $fonction=$this->fRepos->getPaginate($this->nbre);
+        $fonctions=$this->fRepos->getPaginate($this->nbre);
         $links=$fonctions->setPath('');
 
         return view("AllFonction",compact("fonctions","links"));
@@ -51,6 +51,8 @@ class FonctionController extends Controller
     public function store(CreateFonctionRequest $request)
     {
         //
+        $this->fRepos->store($request->all());
+        return "OPERATION REUSSIE";
     }
 
     /**
@@ -62,6 +64,8 @@ class FonctionController extends Controller
     public function show($id)
     {
         //
+        $fonction=$this->fRepos->getById($id);
+        return $fonction;
     }
 
     /**
@@ -85,6 +89,8 @@ class FonctionController extends Controller
     public function update(UpdateFonctionRequest $request, $id)
     {
         //
+        $this->fRepos->update($id,$request->all());
+        return "OPERATIONB REUSSIE";
     }
 
     /**
@@ -96,5 +102,7 @@ class FonctionController extends Controller
     public function destroy($id)
     {
         //
+        $this->fRepos->destroy($id);
+        return "OPERATION REUSSIE";
     }
 }

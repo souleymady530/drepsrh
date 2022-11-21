@@ -12,10 +12,10 @@ class dreps extends Model
     protected $fillable=
     [
     'id',
-    'nomDREPS ',
+    'nomDREPS',
     'nom1erResponsable',
     'prenom1erResponsable',
-    'Emploi1erResponsable',
+    'emploi1erResponsable',
     'titreHonorifique1resp',
     ];
     public $timestamps=false;

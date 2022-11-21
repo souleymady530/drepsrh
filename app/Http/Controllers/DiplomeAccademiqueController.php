@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateDiplomeRequest;
-use App\Http\Requests\UpdateDiplomeRequest;
+use App\Http\Requests\DiplomeAccademiqueUpdate;
 use App\Repositories\DiplomeaccademiqueRepository;
 
 class DiplomeAccademiqueController extends Controller
@@ -14,17 +14,17 @@ class DiplomeAccademiqueController extends Controller
      * @return \Illuminate\Http\Response (retourne un objet de type reponse)
      */
     
-     protected $drepos; //Propriété de la classe Diplomeaccademique
+     protected $dRepos; //Propriété de la classe Diplomeaccademique
      protected $nombre=15;//Propriété de la classe Diplomeaccademique
-
+    public $message="";
     Public function __Construct(DiplomeaccademiqueRepository $diplorepos)
     {
-        $this->drepos=$diplorepos;
+        $this->dRepos=$diplorepos;
     }
     
      public function index()
     {
-        $diplomes=$this->drepos->getPaginate($this->nombre);
+        $diplomes=$this->dRepos->getPaginate($this->nombre);
         $links=$diplomes->setPath('');
         return view("alldiplome",compact("diplomes","links"));
     }
@@ -39,16 +39,23 @@ class DiplomeAccademiqueController extends Controller
         return view("AjoutDiplome");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+    /*************************************************************************************************************************
+     * ok*
+     *********************************************************************************************************************
      */
-    public function store(CreateDiplomeRequest $request)
+    public function store(Request $request)
     {
-        $this->dRepos->store($request->all());
-        return view("StoreConfirmRegistration");
+        if($request->ajax())
+        {
+            $this->validate($request,
+            [
+                "NomDiplome"=>"required|unique:diplomeaccademique,NomDiplome", 
+            ]);
+            $this->dRepos->store($request->all());
+            return response()->json();
+        }
+        abort(404);
+        
     }
 
     /**
@@ -60,7 +67,7 @@ class DiplomeAccademiqueController extends Controller
     public function show($id)
     {
         $diplome=$this->dRepos->getById($id);
-        return view("FicheDiplome",compact("diplome"));
+        return $diplome;
     }
 
     /**
@@ -68,11 +75,13 @@ class DiplomeAccademiqueController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * $this->bRepos->getById($id);
      */
     public function edit($id)
     {
-        $diplome=$this->drepos->getById($id);
-        return view("ModifDiplome",compact("diplome"));
+        $diplome=$this->dRepos->getById($id);
+        return $diplome;
+        
     }
 
     /**
@@ -82,10 +91,18 @@ class DiplomeAccademiqueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDiplomeRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $this->dRepos->update($id,$request->all());
-        return view("UpdateConfirmRegistration");
+        if($request->ajax())
+        {
+            $this->validate($request,
+            [
+                "NomDiplome"=>"required|unique:diplomeaccademique,NomDiplome,".$id
+            ]);
+             $this->dRepos->update($id,$request->all());
+             return response()->json();
+        }
+        abort(404);
     }
 
     /**
@@ -96,7 +113,7 @@ class DiplomeAccademiqueController extends Controller
      */
     public function destroy($id)
     {
-        $this->dRepos->Delete($id);
-        return redirect()->back();
+        $this->dRepos->destroy($id);
+        return "OPERATION REUSSIE";
     }
 }

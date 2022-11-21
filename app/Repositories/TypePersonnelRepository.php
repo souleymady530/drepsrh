@@ -1,7 +1,7 @@
 <?php 
 namespace App\Repositories;
 use App\Models\typepersonnel;
-class typepersonnelRepository extends ResourceRepository
+class TypePersonnelRepository extends ResourceRepository
 {
 	
 	public function __construct(typepersonnel $p)

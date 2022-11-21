@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateEmploiRequest;
 use App\Http\Requests\UpdateEmploiRequest;
-use app\Repositories\EmploiRepository;
+use App\Repositories\EmploiRepository;
 use App\Models\Emploi;
 
 class EmploiController extends Controller
@@ -17,9 +17,9 @@ class EmploiController extends Controller
      */
     protected $eRepos;
     protected $nbre=15;
-    public function __construct(EmploiRepsotory $eRepos)
+    public function __construct(EmploiRepository $eRepos)
     {
-        $thos->eRepos=$eRepos;
+        $this->eRepos=$eRepos;
     }
 
 
@@ -27,7 +27,7 @@ class EmploiController extends Controller
     {
         //
         $emplois=$this->eRepos->getPaginate($this->nbre);
-        $links=$echelles->setPath('');
+        $links=$emplois->setPath('');
 
         return view("AllEmploi",compact("emplois","links"));
     }
@@ -51,6 +51,8 @@ class EmploiController extends Controller
     public function store(CreateEmploiRequest $request)
     {
         //
+        $this->eRepos->store($request->all());
+        return "OPERATION REUSSIE";
     }
 
     /**
@@ -62,6 +64,8 @@ class EmploiController extends Controller
     public function show($id)
     {
         //
+        $emploi=$this->eRepos->getById($id);
+        return $emploi;
     }
 
     /**
@@ -85,6 +89,8 @@ class EmploiController extends Controller
     public function update(UpdateEmploiRequest $request, $id)
     {
         //
+        $this->eRepos->update($id,$request->all());
+        return "OPERATION REUSSIE";
     }
 
     /**
@@ -96,5 +102,7 @@ class EmploiController extends Controller
     public function destroy($id)
     {
         //
+        $this->eRepos->destroy($id);
+        return "OPERATION REUSSIE";
     }
 }

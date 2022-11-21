@@ -46,6 +46,8 @@ class CategorieControllerController extends Controller
     public function store(CreateCategorieRequest $request)
     {
         //
+        $this->cRepos->store($request->all());
+        return "OPERATION REUSSIE";
     }
 
     /**
@@ -57,6 +59,8 @@ class CategorieControllerController extends Controller
     public function show($id)
     {
         //
+        $categorie=$this->cRepos->getById($id);
+        return $categorie;
     }
 
     /**
@@ -68,6 +72,7 @@ class CategorieControllerController extends Controller
     public function edit($id)
     {
         //
+      
     }
 
     /**
@@ -80,6 +85,8 @@ class CategorieControllerController extends Controller
     public function update(UpdateCategorieRequest $request, $id)
     {
         //
+        $this->cRepos->update($id,$request->all());
+        return "OPERATION REUSSIE";
     }
 
     /**
@@ -91,5 +98,7 @@ class CategorieControllerController extends Controller
     public function destroy($id)
     {
         //
+        $this->cRepos->destroy($id);
+        return "OPERATION REUSSIE";
     }
 }

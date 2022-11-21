@@ -1,0 +1,93 @@
+.modal1 
+{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    gap:0.4rem;
+    padding:1.3rem;
+    min-height:250px;
+    position:relative;
+    width:100%;
+    border-radius:15px;
+    z-index:2;
+}
+.panImagePleine #pleineImage
+{
+    height:500px;
+    width:75%;
+}
+.hidden 
+{
+    display:none;
+}
+.modal1  .flex1   
+{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.modal1 input 
+{
+    padding:0.7rem 1rem;
+    border: solid 1px #ddd ;
+    border-radius:5px;
+    font-size:0.9em;
+}
+
+.modal1 p    
+{
+    font-size:0.9rem;
+    color:#777;
+    margin:0.4rem 0 0.2rem;
+}
+
+button 
+{
+    cursor:pointer;
+    border:none;
+    font-weight:600;
+}
+
+.overlayPanRow .btn 
+{
+    display:inline-block;
+    padding:0.8rem 1.4rem;
+    font-weight:700;
+    background-color:black;
+    color:white;
+    border-radius:5px;
+    text-align:center;
+    font-size:1em;
+    
+}
+
+.btn-open 
+{
+    position:absolute;
+    bottom:90px;
+}
+
+.btn-close 
+{
+    transform:translate(10px,-20px);
+    padding:0.5rem 0.7rem;
+    background-color:#eee;
+    border-radius:50%;
+} 
+
+
+.overlay 
+{
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+    backdrop-filter:blur(3px);
+    z-index:1;
+}
+
